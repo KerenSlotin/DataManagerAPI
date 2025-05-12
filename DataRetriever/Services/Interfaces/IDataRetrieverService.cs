@@ -1,6 +1,9 @@
 using DataRetriever.Models;
 
-public interface IDataRetrieverService
+namespace DataRetriever.Services.Interfaces
 {
+  public interface IDataRetrieverService
+  {
     Task<DataItem> GetDataAsync(Guid id);
+  }
 }

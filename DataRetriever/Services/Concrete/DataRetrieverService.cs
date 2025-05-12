@@ -1,8 +1,11 @@
 using DataRetriever.Data;
 using DataRetriever.Models;
+using DataRetriever.Services.Interfaces;
 
-public class DataRetrieverService : IDataRetrieverService
+namespace DataRetriever.Services.Concrete
 {
+  public class DataRetrieverService : IDataRetrieverService
+  {
     private readonly IDataRepository _dataRetrieverRepository;
 
     public DataRetrieverService(IDataRepository dataRetrieverRepository)
@@ -14,4 +17,5 @@ public class DataRetrieverService : IDataRetrieverService
     {
       throw new NotImplementedException();
     }
+  }
 }

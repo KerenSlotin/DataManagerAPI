@@ -1,5 +1,9 @@
+using DataRetriever.DataStorage;
 
-public interface IDataStorageFactory
+namespace DataRetriever.Factory
 {
-  IDataStorage CreateDataSource(DataStorageType sourceType);
+  public interface IDataStorageFactory
+  {
+    IDataStorage CreateDataSource(DataStorageType sourceType);
+  }
 }

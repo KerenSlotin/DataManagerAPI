@@ -1,10 +1,12 @@
-
 using DataRetriever.Models;
 
-public class CacheStorage : IDataStorage
+namespace DataRetriever.DataStorage
 {
-  public Task<DataItem> GetDataAsync(Guid id)
+  public class CacheStorage : IDataStorage
   {
-    throw new NotImplementedException();
+    public Task<DataItem> GetDataAsync(Guid id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

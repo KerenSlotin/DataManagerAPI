@@ -1,6 +1,9 @@
 using DataRetriever.Models;
 
-public interface IDataStorage
+namespace DataRetriever.DataStorage
 {
-  Task<DataItem> GetDataAsync(Guid id);
+  public interface IDataStorage
+  {
+    Task<DataItem> GetDataAsync(Guid id);
+  }
 }
