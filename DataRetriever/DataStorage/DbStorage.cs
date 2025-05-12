@@ -5,7 +5,7 @@ namespace DataRetriever.DataStorage
   public class DbStorage : IDataStorage
   {
     public DataStorageType StorageType => DataStorageType.Database;
-    public Task<DataItem> GetDataAsync(string id)
+    public async Task<DataItem?> GetDataAsync(string id)
     {
       return null;
     }

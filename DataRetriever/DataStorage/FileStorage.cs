@@ -1,3 +1,4 @@
+using System.Text.Json;
 using DataRetriever.Models;
 
 namespace DataRetriever.DataStorage
@@ -6,30 +7,42 @@ namespace DataRetriever.DataStorage
   {
     public DataStorageType StorageType => DataStorageType.File;
 
-    private const string _filePath = "data.txt";
+    private readonly string _storagePath;
 
-    public async Task<DataItem> GetDataAsync(string id)
+    public FileStorage(IConfiguration configuration)
     {
-      var lines = await File.ReadAllLinesAsync(_filePath);
-      foreach (var line in lines)
-      {
-        var parts = line.Split(',');
-        if (parts[0] == id)
-        {
-          return new DataItem
-          {
-            Id = id,
-            Value = parts[1],
-            CreatedAt = DateTime.Parse(parts[2])
-          };
-        }
-      }
-      return null;
+      _storagePath = configuration["FileStorage:Path"] ?? 
+                Path.Combine(Directory.GetCurrentDirectory(), "TempStorage");
+      if (!Directory.Exists(_storagePath))
+        Directory.CreateDirectory(_storagePath);
     }
 
-    public Task<bool> SaveDataAsync(DataItem dataItem)
+    public async Task<DataItem?> GetDataAsync(string id)
     {
-      throw new NotImplementedException();
+      var files = Directory.GetFiles(_storagePath, $"{id}_*.json")
+                .Where(IsExpired).FirstOrDefault();
+
+      if (files == null || files.Length == 0)
+        return null;
+
+      var fileContent = await File.ReadAllTextAsync(files);
+      return JsonSerializer.Deserialize<DataItem>(fileContent);
+    }
+
+    public async Task<bool> SaveDataAsync(DataItem data)
+    {
+      var expirationTime = DateTime.UtcNow.AddMinutes(30);
+      var fileName = Path.Combine(_storagePath, $"{data.Id}_{expirationTime.Ticks}.json");
+
+      await File.WriteAllTextAsync(fileName, JsonSerializer.Serialize(data));
+      return true;
+    }
+
+    private bool IsExpired(string fileName)
+    {
+      var ticks = long.Parse(Path.GetFileNameWithoutExtension(fileName).Split('_')[1]);
+      var expirationTime = new DateTime(ticks);
+      return expirationTime < DateTime.UtcNow;
     }
   }
 }
