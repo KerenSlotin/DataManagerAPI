@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IDataRepository, DataRepository>();
 builder.Services.AddSingleton<IDataRetrieverService, DataRetrieverService>();
+builder.Services.AddSingleton<IDataStorageFactory, DataStorageFactory>();
 
 
 var app = builder.Build();
