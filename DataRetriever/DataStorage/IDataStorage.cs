@@ -1,5 +1,3 @@
-
-
 using DataRetriever.Models;
 
 public interface IDataStorage
