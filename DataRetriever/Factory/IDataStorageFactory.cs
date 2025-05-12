@@ -4,6 +4,7 @@ namespace DataRetriever.Factory
 {
   public interface IDataStorageFactory
   {
-    IDataStorage CreateDataSource(DataStorageType sourceType);
+    IDataStorage CreateDataStorage(DataStorageType sourceType);
+    IEnumerable<DataStorageType> GetAllDataStorageTypes();
   }
 }

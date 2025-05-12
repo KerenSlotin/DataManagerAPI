@@ -1,4 +1,4 @@
-namespace DataRetriever.Factory
+namespace DataRetriever.DataStorage
 {
   public enum DataStorageType
   {

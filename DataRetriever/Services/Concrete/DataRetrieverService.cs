@@ -13,9 +13,9 @@ namespace DataRetriever.Services.Concrete
       _dataRetrieverRepository = dataRetrieverRepository;
     }
 
-    public Task<DataItem> GetDataAsync(Guid id)
+    public async Task<DataItem?> GetDataAsync(string id)
     {
-      throw new NotImplementedException();
+      return await _dataRetrieverRepository.GetDataAsync(id);
     }
   }
 }

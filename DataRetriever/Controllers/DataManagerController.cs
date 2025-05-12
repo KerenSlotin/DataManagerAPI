@@ -15,7 +15,7 @@ namespace DataRetriever.Controllers
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetData(Guid id)
+    public async Task<ActionResult<DataItem>> GetData(string id)
     {
       var data = await _dataRetrieverService.GetDataAsync(id);
       if (data == null)

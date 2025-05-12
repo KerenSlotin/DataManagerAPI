@@ -6,26 +6,22 @@ namespace DataRetriever.Factory
 {
   public class DataStorageFactory : IDataStorageFactory
   {
-    private readonly Dictionary<DataStorageType, Func<IDataStorage>> _dataStorages;
+    private readonly IEnumerable<IDataStorage> _dataStorages;
 
-    public DataStorageFactory(IServiceProvider serviceProvider)
+    public DataStorageFactory(IEnumerable<IDataStorage> dataStorages)
     {
-      _dataStorages = new Dictionary<DataStorageType, Func<IDataStorage>>
-        {
-            { DataStorageType.Cache, serviceProvider.GetRequiredService<CacheStorage> },
-            { DataStorageType.File, serviceProvider.GetRequiredService<FileStorage> },
-            { DataStorageType.Database, serviceProvider.GetRequiredService<DbStorage> }
-        };
+      _dataStorages = dataStorages;
     }
 
-    public IDataStorage CreateDataSource(DataStorageType sourceType)
+    public IDataStorage CreateDataStorage(DataStorageType sourceType)
     {
-      if (_dataStorages.TryGetValue(sourceType, out var getDataStorage))
-      {
-        return getDataStorage();
-      }
-
-      throw new ArgumentOutOfRangeException(nameof(sourceType), sourceType, null);
+      var storage = _dataStorages.FirstOrDefault(s => s.StorageType == sourceType);
+      return storage ?? throw new ArgumentOutOfRangeException(nameof(sourceType), sourceType, null);
+    }
+    
+    public IEnumerable<DataStorageType> GetAllDataStorageTypes()
+    {
+      return _dataStorages.Select(s => s.StorageType).Distinct();
     }
   }
 }

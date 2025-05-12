@@ -4,6 +4,6 @@ namespace DataRetriever.Data
 {
   public interface IDataRepository
   {
-    Task<DataItem> GetDataAsync(Guid id);
+    Task<DataItem?> GetDataAsync(string id);
   }
 }

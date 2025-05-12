@@ -4,6 +4,8 @@ namespace DataRetriever.DataStorage
 {
   public interface IDataStorage
   {
-    Task<DataItem> GetDataAsync(Guid id);
+    public DataStorageType StorageType { get; }
+    Task<DataItem> GetDataAsync(string id);
+    Task<bool> SaveDataAsync(DataItem dataItem);
   }
 }

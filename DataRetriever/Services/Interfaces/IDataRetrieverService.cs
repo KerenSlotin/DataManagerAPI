@@ -4,6 +4,6 @@ namespace DataRetriever.Services.Interfaces
 {
   public interface IDataRetrieverService
   {
-    Task<DataItem> GetDataAsync(Guid id);
+    Task<DataItem?> GetDataAsync(string id);
   }
 }
