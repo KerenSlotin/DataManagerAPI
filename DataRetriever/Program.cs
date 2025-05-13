@@ -1,5 +1,6 @@
 using DataRetriever.DataStorage;
 using DataRetriever.Factory;
+using DataRetriever.Repository;
 using DataRetriever.Services.Concrete;
 using DataRetriever.Services.Interfaces;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ builder.Services.AddScoped<IDataRetrieverService, DataRetrieverService>();
 builder.Services.AddScoped<IDataStorage, CacheStorage>();
 builder.Services.AddScoped<IDataStorage, FileStorage>();
 builder.Services.AddScoped<IDataStorage, DbStorage>();
+builder.Services.AddScoped<IDataRepository, MongoDbRepository>();
 builder.Services.AddScoped<IDataStorageFactory, DataStorageFactory>();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
