@@ -14,7 +14,7 @@ namespace DataRetriever.Controllers
     }
 
     [HttpPost("login")]
-    public ActionResult<string> Login([FromBody] LoginDto loginData)
+    public ActionResult<AuthResponseDto> Login([FromBody] LoginDto loginData)
     {
       var username = loginData?.Username;
       var password = loginData?.Password;
@@ -26,7 +26,10 @@ namespace DataRetriever.Controllers
       try
       {
         var token = _tokenprovider.Create(username, password);
-        return Ok(token);
+        return Ok(new AuthResponseDto
+        {
+          Token = token
+        });
       }
       catch (UnauthorizedAccessException)
       {

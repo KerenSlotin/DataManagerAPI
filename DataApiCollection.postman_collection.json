@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "666a1fdf-9783-480e-92a1-3c9e293faea1",
+		"name": "DataApiCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Request (Authentication)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"if (response.token) {",
+							"  pm.environment.set(\"jwt_token\", response.token);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5166/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5166",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Data Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"if (response.id) {",
+							"  pm.environment.set(\"example_id\", response.id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\": \"someValue\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5166/data",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5166",
+					"path": [
+						"data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Value is 'someValue'\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.value).to.eql(\"someValue\");",
+							"});",
+							"",
+							"pm.test(\"id is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"example_id\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5166/data/{{example_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5166",
+					"path": [
+						"data",
+						"{{example_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Data Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"value\": \"modifiedValue\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5166/data/{{example_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5166",
+					"path": [
+						"data",
+						"{{example_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data Request after Update",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Value is 'modifiedValue'\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.value).to.eql(\"modifiedValue\");",
+							"});",
+							"",
+							"pm.test(\"id is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"example_id\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5166/data/{{example_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5166",
+					"path": [
+						"data",
+						"{{example_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "jwt",
+		"jwt": [
+			{
+				"key": "algorithm",
+				"value": "HS256",
+				"type": "string"
+			},
+			{
+				"key": "isSecretBase64Encoded",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "payload",
+				"value": "{}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "headerPrefix",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "queryParamKey",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "header",
+				"value": "{}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

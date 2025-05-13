@@ -56,7 +56,6 @@ namespace DataRetriever.Controllers
       {
         return BadRequest(ex.Message);
       }
-
     }
   }
 }
