@@ -1,4 +1,5 @@
 using DataRetriever.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataRetriever.Controllers
@@ -14,6 +15,7 @@ namespace DataRetriever.Controllers
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Admin,User")]
     public async Task<ActionResult<DataItem>> GetData(string id)
     {
       var data = await _dataRetrieverService.GetDataAsync(id);
@@ -26,6 +28,7 @@ namespace DataRetriever.Controllers
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> CreateData([FromBody] CreateDataDto dataItem)
     {
       try
@@ -40,6 +43,7 @@ namespace DataRetriever.Controllers
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateData(Guid id, [FromBody] DataItem dataItem)
     {
       return Ok();
