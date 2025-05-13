@@ -1,4 +1,3 @@
-using DataRetriever.Models;
 using DataRetriever.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,9 +26,17 @@ namespace DataRetriever.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateData([FromBody] DataItem dataItem)
+    public async Task<ActionResult> CreateData([FromBody] CreateDataDto dataItem)
     {
-      return Ok();
+      try
+      {
+        var value = await _dataRetrieverService.CreateData(dataItem);
+        return CreatedAtAction(nameof(GetData), new { id = value.Id }, value);
+      }
+      catch (Exception ex)
+      {
+        return Conflict(ex.Message);
+      }
     }
 
     [HttpPut("{id}")]

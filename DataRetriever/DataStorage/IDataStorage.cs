@@ -1,4 +1,3 @@
-using DataRetriever.Models;
 
 namespace DataRetriever.DataStorage
 {
@@ -6,6 +5,6 @@ namespace DataRetriever.DataStorage
   {
     public DataStorageType StorageType { get; }
     Task<DataItem?> GetDataAsync(string id);
-    Task<bool> SaveDataAsync(DataItem dataItem);
+    Task SaveDataAsync(DataItem dataItem);
   }
 }

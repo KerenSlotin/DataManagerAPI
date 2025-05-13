@@ -1,6 +1,6 @@
 using System.Text.Json;
-using DataRetriever.Models;
 using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace DataRetriever.DataStorage
 {
@@ -8,7 +8,7 @@ namespace DataRetriever.DataStorage
   {
     public DataStorageType StorageType => DataStorageType.Cache;
     private readonly IDistributedCache _cache;
-
+    private readonly TimeSpan _cacheExpiry = TimeSpan.FromMinutes(10);
     public CacheStorage(IDistributedCache cache)
     {
       _cache = cache;
@@ -16,20 +16,18 @@ namespace DataRetriever.DataStorage
     
     public async Task<DataItem?> GetDataAsync(string id)
     {
-      var cachedData = await _cache.GetStringAsync(id);
-      return cachedData != null 
-                ? JsonSerializer.Deserialize<DataItem>(cachedData) 
+      var cachedItem = await _cache.GetStringAsync(id);
+      return cachedItem != null 
+                ? JsonConvert.DeserializeObject<DataItem>(cachedItem) 
                 : null;
-      // return new DataItem
-      // {
-      //   Id = id,
-      //   Value = "Cached Data",
-      //   CreatedAt = DateTime.UtcNow
-      // };
     }
-    public Task<bool> SaveDataAsync(DataItem dataItem)
+
+    public async Task SaveDataAsync(DataItem dataItem)
     {
-      return Task.FromResult(true);
+      await _cache.SetStringAsync(
+            dataItem.Id, 
+            JsonConvert.SerializeObject(dataItem),
+            new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = _cacheExpiry });
     }
   }
 }

@@ -1,7 +1,7 @@
 using DataRetriever.DataStorage;
 using DataRetriever.Factory;
-using DataRetriever.Models;
 using DataRetriever.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DataRetriever.Services.Concrete
 {
@@ -23,6 +23,8 @@ namespace DataRetriever.Services.Concrete
         {
           if (dataStorage.StorageType != DataStorageType.Cache)
             await UpdateCache(data);
+          if (dataStorage.StorageType == DataStorageType.Database)
+            await UpdateFile(data);
           return data;
         }
       }
@@ -30,10 +32,29 @@ namespace DataRetriever.Services.Concrete
       return null;
     }
 
+    public async Task<DataItem> CreateData(CreateDataDto dataDto)
+    {
+      var dbStorage = _dataStorageFactory.CreateDataStorage(DataStorageType.Database);
+      var dataItem = new DataItem 
+      {
+        Value = dataDto.Value,
+      };
+
+      await dbStorage.SaveDataAsync(dataItem);
+      return dataItem;
+    }
+
+
     private async Task UpdateCache(DataItem data)
     {
       var cache =  _dataStorageFactory.CreateDataStorage(DataStorageType.Cache);
       await cache.SaveDataAsync(data);
+    }
+
+    private async Task UpdateFile(DataItem data)
+    {
+      var fileStorage = _dataStorageFactory.CreateDataStorage(DataStorageType.File);
+      await fileStorage.SaveDataAsync(data);
     }
   }
 }

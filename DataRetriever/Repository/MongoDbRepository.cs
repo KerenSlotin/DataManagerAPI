@@ -1,4 +1,3 @@
-using Microsoft.Azure.Management.CosmosDB.Fluent;
 using MongoDB.Driver;
 
 namespace DataRetriever.Repository

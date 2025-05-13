@@ -1,5 +1,4 @@
 using System.Text.Json;
-using DataRetriever.Models;
 
 namespace DataRetriever.DataStorage
 {
@@ -20,7 +19,7 @@ namespace DataRetriever.DataStorage
     public async Task<DataItem?> GetDataAsync(string id)
     {
       var files = Directory.GetFiles(_storagePath, $"{id}_*.json")
-                .Where(IsExpired).FirstOrDefault();
+                .Where(file => !IsExpired(file)).FirstOrDefault();
 
       if (files == null || files.Length == 0)
         return null;
@@ -29,20 +28,28 @@ namespace DataRetriever.DataStorage
       return JsonSerializer.Deserialize<DataItem>(fileContent);
     }
 
-    public async Task<bool> SaveDataAsync(DataItem data)
+    public async Task SaveDataAsync(DataItem data)
     {
       var expirationTime = DateTime.UtcNow.AddMinutes(30);
       var fileName = Path.Combine(_storagePath, $"{data.Id}_{expirationTime.Ticks}.json");
 
       await File.WriteAllTextAsync(fileName, JsonSerializer.Serialize(data));
-      return true;
     }
 
     private bool IsExpired(string fileName)
     {
       var ticks = long.Parse(Path.GetFileNameWithoutExtension(fileName).Split('_')[1]);
       var expirationTime = new DateTime(ticks);
-      return expirationTime < DateTime.UtcNow;
+
+      if (DateTime.Compare(expirationTime, DateTime.UtcNow) > 0)
+      {
+        return false;
+      }
+      else
+      {
+        File.Delete(fileName);
+        return true;
+      }
     }
   }
 }

@@ -1,18 +1,24 @@
-using DataRetriever.Models;
+using DataRetriever.Repository;
 
 namespace DataRetriever.DataStorage
 {
   public class DbStorage : IDataStorage
   {
     public DataStorageType StorageType => DataStorageType.Database;
-    public async Task<DataItem?> GetDataAsync(string id)
+    private readonly IDataRepository _repository;
+    public DbStorage(IDataRepository repository)
     {
-      return null;
+      _repository = repository;
     }
 
-    public Task<bool> SaveDataAsync(DataItem dataItem)
+    public async Task<DataItem?> GetDataAsync(string id)
     {
-      throw new NotImplementedException();
+      return await _repository.GetDataAsync(id);
+    }
+
+    public async Task SaveDataAsync(DataItem dataItem)
+    {
+      await _repository.AddAsync(dataItem);
     }
   }
 }
