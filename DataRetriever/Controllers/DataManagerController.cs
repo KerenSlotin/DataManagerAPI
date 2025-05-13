@@ -1,3 +1,4 @@
+using DataRetriever.Dtos;
 using DataRetriever.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ namespace DataRetriever.Controllers
     {
       try
       {
-        var value = await _dataRetrieverService.CreateData(dataItem);
+        var value = await _dataRetrieverService.CreateDataAsync(dataItem);
         return CreatedAtAction(nameof(GetData), new { id = value.Id }, value);
       }
       catch (Exception ex)
@@ -44,9 +45,18 @@ namespace DataRetriever.Controllers
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult> UpdateData(Guid id, [FromBody] DataItem dataItem)
+    public async Task<ActionResult> UpdateData(string id, [FromBody] UpdateDataDto dataItem)
     {
-      return Ok();
+      try
+      {
+        await _dataRetrieverService.UpdateDataAsync(id, dataItem);
+        return Ok();
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex.Message);
+      }
+
     }
   }
 }

@@ -36,6 +36,16 @@ namespace DataRetriever.DataStorage
       await File.WriteAllTextAsync(fileName, JsonSerializer.Serialize(data));
     }
 
+    public async Task UpdateDataAsync(DataItem dataItem)
+    {
+      var existingFile = Directory.GetFiles(_storagePath, $"{dataItem.Id}_*.json").FirstOrDefault();
+      if (existingFile != null)
+      {
+        File.Delete(existingFile);
+        await SaveDataAsync(dataItem);
+      }
+    }
+
     private bool IsExpired(string fileName)
     {
       var ticks = long.Parse(Path.GetFileNameWithoutExtension(fileName).Split('_')[1]);
@@ -51,5 +61,6 @@ namespace DataRetriever.DataStorage
         return true;
       }
     }
+
   }
 }

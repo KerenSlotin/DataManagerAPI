@@ -6,5 +6,6 @@ namespace DataRetriever.DataStorage
     public DataStorageType StorageType { get; }
     Task<DataItem?> GetDataAsync(string id);
     Task SaveDataAsync(DataItem dataItem);
+    Task UpdateDataAsync(DataItem dataItem);
   }
 }

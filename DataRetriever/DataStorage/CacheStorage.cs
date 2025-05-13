@@ -29,5 +29,10 @@ namespace DataRetriever.DataStorage
             JsonConvert.SerializeObject(dataItem),
             new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = _cacheExpiry });
     }
+
+    public async Task UpdateDataAsync(DataItem dataItem)
+    {
+      await SaveDataAsync(dataItem);
+    }
   }
 }

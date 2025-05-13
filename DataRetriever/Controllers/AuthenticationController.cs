@@ -1,3 +1,4 @@
+using DataRetriever.Dtos;
 using DataRetriever.Users;
 using Microsoft.AspNetCore.Mvc;
 

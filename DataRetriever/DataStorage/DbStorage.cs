@@ -20,5 +20,10 @@ namespace DataRetriever.DataStorage
     {
       await _repository.AddAsync(dataItem);
     }
+
+    public async Task UpdateDataAsync(DataItem dataItem)
+    {
+      await _repository.UpdateAsync(dataItem);
+    }
   }
 }

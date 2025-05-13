@@ -1,4 +1,5 @@
 using DataRetriever.DataStorage;
+using DataRetriever.Dtos;
 using DataRetriever.Factory;
 using DataRetriever.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -32,18 +33,32 @@ namespace DataRetriever.Services.Concrete
       return null;
     }
 
-    public async Task<DataItem> CreateData(CreateDataDto dataDto)
+    public async Task<DataItem> CreateDataAsync(CreateDataDto data)
     {
       var dbStorage = _dataStorageFactory.CreateDataStorage(DataStorageType.Database);
       var dataItem = new DataItem 
       {
-        Value = dataDto.Value,
+        Value = data.Value,
       };
 
       await dbStorage.SaveDataAsync(dataItem);
       return dataItem;
     }
 
+    public async Task UpdateDataAsync(string id, UpdateDataDto data)
+    {
+      foreach (var dataStorageType in Enum.GetValues(typeof(DataStorageType)).Cast<DataStorageType>())
+      {
+        var dataStorage = _dataStorageFactory.CreateDataStorage(dataStorageType);
+        var dataItem = await dataStorage.GetDataAsync(id);
+        
+        if (dataItem == null)
+          continue;
+
+        dataItem.Value = data!.Value;
+        await dataStorage.UpdateDataAsync(dataItem);
+      }
+    }
 
     private async Task UpdateCache(DataItem data)
     {

@@ -29,7 +29,7 @@ namespace DataRetriever.Users
 
     public string Create(string username, string password)
     {
-      if(!_users.TryGetValue(username, out var storedPassword) && storedPassword != password)
+      if(!_users.TryGetValue(username, out var storedPassword) || storedPassword != password)
       {
         throw new UnauthorizedAccessException("Invalid username or password");
       }
