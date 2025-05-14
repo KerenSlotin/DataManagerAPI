@@ -48,12 +48,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5166/users/login",
+					"raw": "http://localhost:8080/users/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"users",
 						"login"
@@ -114,12 +114,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5166/data",
+					"raw": "http://localhost:8080/data",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data"
 					]
@@ -162,12 +162,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5166/data/{{example_id}}",
+					"raw": "http://localhost:8080/data/{{example_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data",
 						"{{example_id}}"
@@ -214,12 +214,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5166/data/{{example_id}}",
+					"raw": "http://localhost:8080/data/{{example_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data",
 						"{{example_id}}"
@@ -272,12 +272,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5166/data/{{example_id}}",
+					"raw": "http://localhost:8080/data/{{example_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data",
 						"{{example_id}}"
@@ -320,12 +320,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5166/users/login",
+					"raw": "http://localhost:8080/users/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"users",
 						"login"
@@ -372,12 +372,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5166/data",
+					"raw": "http://localhost:8080/data",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data"
 					]
@@ -423,12 +423,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5166/data/{{example_id}}",
+					"raw": "http://localhost:8080/data/{{example_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data",
 						"{{example_id}}"
@@ -479,12 +479,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5166/data/{{example_id}}",
+					"raw": "http://localhost:8080/data/{{example_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5166",
+					"port": "8080",
 					"path": [
 						"data",
 						"{{example_id}}"
