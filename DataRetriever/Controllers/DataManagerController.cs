@@ -1,5 +1,6 @@
 using DataRetriever.Dtos;
 using DataRetriever.Services.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,17 @@ namespace DataRetriever.Controllers
   public class DataManagerController : ControllerBase
   {
     private readonly IDataRetrieverService _dataRetrieverService;
+    private IValidator<CreateDataDto> _createDataValidator;
+    private IValidator<UpdateDataDto> _updateDataValidator;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DataManagerController"/> class.
     /// </summary>
-    public DataManagerController(IDataRetrieverService dataRetrieverService)
+    public DataManagerController(IDataRetrieverService dataRetrieverService, IValidator<CreateDataDto> validator, IValidator<UpdateDataDto> updateDataValidator)
     {
       _dataRetrieverService = dataRetrieverService;
+      _createDataValidator = validator;
+      _updateDataValidator = updateDataValidator;
     }
 
     /// <summary>
@@ -50,6 +55,12 @@ namespace DataRetriever.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> CreateData([FromBody] CreateDataDto dataItem)
     {
+      var result = await _createDataValidator.ValidateAsync(dataItem);
+      if (!result.IsValid)
+      {
+        return BadRequest(result.Errors);
+      }
+      
       try
       {
         var value = await _dataRetrieverService.CreateDataAsync(dataItem);
@@ -71,6 +82,12 @@ namespace DataRetriever.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateData(string id, [FromBody] UpdateDataDto dataItem)
     {
+      var result = await _updateDataValidator.ValidateAsync(dataItem);
+      if (!result.IsValid)
+      {
+        return BadRequest(result.Errors);
+      }
+
       try
       {
         await _dataRetrieverService.UpdateDataAsync(id, dataItem);

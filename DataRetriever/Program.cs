@@ -8,6 +8,10 @@ using DataRetriever.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using DataRetriever.Dtos;
+using DataRetriever.Dtos.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +41,9 @@ builder.Services.AddScoped<IDataStorage, DbStorage>();
 builder.Services.AddScoped<IDataRepository, MongoDbRepository>();
 builder.Services.AddScoped<IDataStorageFactory, DataStorageFactory>();
 builder.Services.AddSingleton<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+builder.Services.AddScoped<IValidator<CreateDataDto>, CreateDataDtoValidator>();
+builder.Services.AddScoped<IValidator<UpdateDataDto>, UpdateDataDtoValidator>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {

@@ -1,5 +1,6 @@
 using DataRetriever.Dtos;
 using DataRetriever.Users;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataRetriever.Controllers
@@ -11,15 +12,18 @@ namespace DataRetriever.Controllers
   [Route("users")]
   public class AuthenticationController : ControllerBase
   {
+    private IValidator<LoginDto> _validator;
     private ITokenProvider _tokenprovider;
 
     /// <summary>
     /// Constructor for AuthenticationController.
     /// </summary>
     /// <param name="tokenprovider"></param>
-    public AuthenticationController(ITokenProvider tokenprovider)
+    /// <param name="validator"></param>
+    public AuthenticationController(ITokenProvider tokenprovider, IValidator<LoginDto> validator)
     {
       _tokenprovider = tokenprovider;
+      _validator = validator;
     }
 
     /// <summary>
@@ -32,8 +36,14 @@ namespace DataRetriever.Controllers
     /// Returns 401 Unauthorized if credentials are invalid.
     /// </returns>
     [HttpPost("login")]
-    public ActionResult<AuthResponseDto> Login([FromBody] LoginDto loginData)
+    public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginData)
     {
+      var result = await _validator.ValidateAsync(loginData);
+      if (!result.IsValid)
+      {
+        return BadRequest(result.Errors);
+      }
+
       var username = loginData?.Username;
       var password = loginData?.Password;
       if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
