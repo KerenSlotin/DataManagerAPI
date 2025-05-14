@@ -34,10 +34,10 @@ This project is a multi-layered data retrieval service using .NET, MongoDB, Redi
    ```
    http://localhost:8080/swagger/index.html
    ```
-   * To login as admin:
+   * To login as admin - 
    Username: admin
    Password: admin123
-   * To login as user:
+   * To login as user - 
    Username: user
    Password: user123
 ---
