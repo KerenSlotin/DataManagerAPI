@@ -1,8 +1,11 @@
+using System.Runtime.CompilerServices;
 using DataRetriever.DataStorage;
 using DataRetriever.Dtos;
 using DataRetriever.Factory;
 using DataRetriever.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+
+
+[assembly: InternalsVisibleTo("DataRetriever.Tests")]
 
 namespace DataRetriever.Services.Concrete
 {
