@@ -1,4 +1,5 @@
 
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
@@ -36,6 +37,8 @@ internal static class ServiceCollectionExtensions
       };
 
       o.AddSecurityRequirement(securityRequirement);
+      var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+      o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     });
 
 

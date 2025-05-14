@@ -3,10 +3,13 @@ using DataRetriever.Dtos;
 
 namespace DataRetriever.Services.Interfaces
 {
+  /// <summary>
+  /// Interface for the data retrieval service.
+  /// </summary>
   public interface IDataRetrieverService
   {
-    Task<DataItem?> GetDataAsync(string id);
-    Task<DataItem> CreateDataAsync(CreateDataDto dataDto);
-    Task UpdateDataAsync(string id, UpdateDataDto data);
+    internal Task<DataItem?> GetDataAsync(string id);
+    internal Task<DataItem> CreateDataAsync(CreateDataDto dataDto);
+    internal Task UpdateDataAsync(string id, UpdateDataDto data);
   }
 }

@@ -2,7 +2,7 @@ using DataRetriever.Repository;
 
 namespace DataRetriever.DataStorage
 {
-  public class DbStorage : IDataStorage
+  internal class DbStorage : IDataStorage
   {
     public DataStorageType StorageType => DataStorageType.Database;
     private readonly IDataRepository _repository;

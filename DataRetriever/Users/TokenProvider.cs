@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DataRetriever.Users
 {
-  public class TokenProvider : ITokenProvider
+  internal class TokenProvider : ITokenProvider
   {
     private readonly IConfiguration _configuration;
     private readonly Dictionary<string, string> _users;
@@ -35,7 +35,7 @@ namespace DataRetriever.Users
       }
 
       var jwtConfig = _configuration.GetSection("Jwt");
-      var key = jwtConfig["Key"];
+      var key = jwtConfig["Key"] ?? throw new ArgumentNullException("Key", "JWT key is not configured");
       var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
       var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

@@ -1,6 +1,6 @@
 namespace DataRetriever.DataStorage
 {
-  public enum DataStorageType
+  internal enum DataStorageType
   {
     Cache,
     File,

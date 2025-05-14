@@ -1,11 +1,14 @@
 
 namespace DataRetriever.DataStorage
 {
+  /// <summary>
+  /// Interface for managing data storage operations.
+  /// </summary>
   public interface IDataStorage
   {
-    public DataStorageType StorageType { get; }
-    Task<DataItem?> GetDataAsync(string id);
-    Task SaveDataAsync(DataItem dataItem);
-    Task UpdateDataAsync(DataItem dataItem);
+    internal DataStorageType StorageType { get; }
+    internal Task<DataItem?> GetDataAsync(string id);
+    internal Task SaveDataAsync(DataItem dataItem);
+    internal Task UpdateDataAsync(DataItem dataItem);
   }
 }

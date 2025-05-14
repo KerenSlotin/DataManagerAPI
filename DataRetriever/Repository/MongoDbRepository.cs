@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace DataRetriever.Repository
 {
-  public class MongoDbRepository : IDataRepository
+  internal class MongoDbRepository : IDataRepository
   {
     private readonly IMongoCollection<DataItem> _collection;
 

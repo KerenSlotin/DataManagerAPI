@@ -2,9 +2,12 @@ using DataRetriever.DataStorage;
 
 namespace DataRetriever.Factory
 {
+  /// <summary>
+  /// Factory interface for creating data storage instances.
+  /// </summary>
   public interface IDataStorageFactory
   {
-    IDataStorage CreateDataStorage(DataStorageType sourceType);
-    IEnumerable<DataStorageType> GetAllDataStorageTypes();
+    internal IDataStorage CreateDataStorage(DataStorageType sourceType);
+    internal IEnumerable<DataStorageType> GetAllDataStorageTypes();
   }
 }

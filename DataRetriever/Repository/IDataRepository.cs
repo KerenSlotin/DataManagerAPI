@@ -1,10 +1,13 @@
 
 namespace DataRetriever.Repository
 {
+  /// <summary>
+  /// Interface for managing data repository.
+  /// </summary>
   public interface IDataRepository
   {
-    Task<DataItem?> GetDataAsync(string id);
-    Task AddAsync(DataItem dataItem);
-    Task<bool> UpdateAsync(DataItem dataItem);
+    internal Task<DataItem?> GetDataAsync(string id);
+    internal Task AddAsync(DataItem dataItem);
+    internal Task<bool> UpdateAsync(DataItem dataItem);
   }
 }

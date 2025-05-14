@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataRetriever.Services.Concrete
 {
-  public class DataRetrieverService : IDataRetrieverService
+  internal class DataRetrieverService : IDataRetrieverService
   {
     private readonly IDataStorageFactory _dataStorageFactory;
     public DataRetrieverService(IDataStorageFactory dataStorageFactory)

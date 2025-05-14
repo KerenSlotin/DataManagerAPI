@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace DataRetriever.DataStorage
 {
-  public class CacheStorage : IDataStorage
+  internal class CacheStorage : IDataStorage
   {
     public DataStorageType StorageType => DataStorageType.Cache;
     private readonly IDistributedCache _cache;

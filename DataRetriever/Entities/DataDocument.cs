@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-public class DataItem
+internal class DataItem
 {
     [BsonId]
     [BsonRepresentation(BsonType.String)]
@@ -9,7 +9,7 @@ public class DataItem
 
     [BsonRequired]
     [BsonElement("value")]
-    public string Value { get; set; }
+    public string? Value { get; set; }
 
     [BsonElement("createdAt")]
     public DateTime CreatedAt { get; set; }

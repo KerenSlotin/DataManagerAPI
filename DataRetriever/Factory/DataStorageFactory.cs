@@ -4,7 +4,7 @@ using DataRetriever.DataStorage;
 
 namespace DataRetriever.Factory
 {
-  public class DataStorageFactory : IDataStorageFactory
+  internal class DataStorageFactory : IDataStorageFactory
   {
     private readonly IEnumerable<IDataStorage> _dataStorages;
 

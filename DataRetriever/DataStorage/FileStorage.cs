@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace DataRetriever.DataStorage
 {
-  public class FileStorage : IDataStorage
+  internal class FileStorage : IDataStorage
   {
     public DataStorageType StorageType => DataStorageType.File;
 
